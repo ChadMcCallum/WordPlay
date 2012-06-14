@@ -20,3 +20,7 @@ Ideas:
 - leaderboard
 - remember client devices to maintain player profile, avoid having to enter name every time
 - multiple displays per game (right now each display starts a new gamestate)
+- smarter logic when adding new letters to replace used ones
+	- ensure a decent number of vowels
+	- ensure each Q has a matching U
+	- replace letters in place instead of appending to end
