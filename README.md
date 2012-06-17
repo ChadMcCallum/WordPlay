@@ -28,3 +28,10 @@ Ideas:
 - remember client devices to maintain player profile, avoid having to enter name every time
 - multiple displays per game (right now each display starts a new gamestate)
 - replace letters in place instead of appending to end
+- show most recent scoring word
+- cool stats
+	- word count per player
+	- # of failures per player (and type, i.e. not english, no letter, etc.)
+	- speed of players
+	- reused words
+- show stats on client device as well as main screen
