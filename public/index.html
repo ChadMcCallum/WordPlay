@@ -17,34 +17,51 @@
 		<div id='letters'>
 		
 		</div>
+		<div id='timer'>2:00</div>
 		<div id='teams'>
 		</div>
 		<div id='qrcode'></div>
 		<script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script type='text/javascript' src="/socket.io/socket.io.js"></script>
 		<script type='text/javascript' src='./jquery.qrcode.min.js'></script>
+		<script type='text/javascript' src='http://underscorejs.org/underscore-min.js'></script>
 		<script type='text/javascript'>
 		  var socket = io.connect('http://localhost:8000');
 		  socket.emit('start-game');
 		  socket.on('game-state', function(data) {
+			if(data.hasTimeout && window.startTime == null) {
+				window.startTime = new Date().getTime();
+				window.interval = window.setInterval(function() {
+					var elapsed = (1000 * 60 * 2) - (new Date().getTime() - window.startTime);
+					var timespan = Math.floor(elapsed / (1000 * 60)) + ":" + Math.floor(elapsed % (1000 * 60) / 1000);
+					$('#timer').text(timespan);
+				}, 1000);
+			}
 			console.log(data);
 			$('#qrcode').empty().qrcode('http://localhost:8000/client.html?id=' + data.id);
 			$('#letters').text(data.letters.toUpperCase().split('').join(' '));
 			$.each(data.teams, function(i, team) {
 				var teamDiv = $('#' + team.name);
 				if(teamDiv.length == 0) {
-					teamDiv = $("<div class='team' id='" + team.name + "' style='background-color: " + team.name + "'>" + team.name + "<div class='players'></div></div>");
+					teamDiv = $("<div class='team' id='" + team.name + "' style='background-color: " + team.name + "'>" + team.name + ": <span class='team-score'></span><div class='players'></div></div>");
 					teamDiv.appendTo("#teams");
 				}
+				var teamScore = _.reduce(team.players, function(memo, player) { return memo + player.score; }, 0)
+				$('.team-score', teamDiv).text(teamScore);
 				var playersDiv = (".players", teamDiv);
 				$.each(team.players, function(j, player) {
 					var playerDiv = $('#' + player.name, playersDiv);
 					if(playerDiv.length == 0) {
-						playerDiv = $("<div class='player' id='" + player.name + "'>" + player.name + "</div>");
+						playerDiv = $("<div class='player' id='" + player.name + "'>" + player.name + "<span class='score'></span></div>");
 						playerDiv.appendTo(playersDiv);
 					}
+					$('.score', playerDiv).text(player.score);
 				});
 			});
+		  });
+		  socket.on('game-over', function() {
+			window.clearInterval(window.interval);
+			$('#timer').text("Game over man!");
 		  });
 		</script>
 	</body>

@@ -13,7 +13,7 @@
 		<script type='text/javascript' src="/socket.io/socket.io.js"></script>
 		<script type='text/javascript'>
 		var socket = io.connect('http://localhost:8000');
-		socket.emit('join-game', { id: getParam('id'), player: { name: 'RTigger' } });
+		socket.emit('join-game', { id: getParam('id'), player: { name: 'RTigger', score: 0 } });
 		socket.on('joined', function(data) {
 			$('#loading').hide();
 			$('#guess').show();
@@ -21,6 +21,10 @@
 		});
 		
 		socket.on('legit', function() {
+			$('#guessbox').val('');
+		});
+		
+		socket.on('fail', function() {
 			$('#guessbox').val('');
 		});
 		

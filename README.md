@@ -12,15 +12,17 @@ Basic idea:
 
 The game here is a basic word game where you use the letters on the display to form words and get points for you / your team.  It includes a basic english dictionary check to make sure people don't enter jibberish.
 
-Ideas:
+Implemented ideas:
 - scrabble-like scoring system
-- streak/bonus points
 - timed games (1 or 2 minutes) with a countdown on the main display
+- smarter logic when adding new letters to replace used ones
+	- ensure a decent number of vowels
+	- ensure each Q has a matching U
+
+Ideas:
+- streak/bonus points
 - make it look pretty
 - leaderboard
 - remember client devices to maintain player profile, avoid having to enter name every time
 - multiple displays per game (right now each display starts a new gamestate)
-- smarter logic when adding new letters to replace used ones
-	- ensure a decent number of vowels
-	- ensure each Q has a matching U
-	- replace letters in place instead of appending to end
+- replace letters in place instead of appending to end
