@@ -18,6 +18,8 @@ Implemented ideas:
 - smarter logic when adding new letters to replace used ones
 	- ensure a decent number of vowels
 	- ensure each Q has a matching U
+	- prevent lots of hard letters
+	- prevent lots of duplicate letters
 
 Ideas:
 - streak/bonus points
