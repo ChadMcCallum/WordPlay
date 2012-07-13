@@ -35,3 +35,5 @@ Ideas:
 	- speed of players
 	- reused words
 - show stats on client device as well as main screen
+- refactor the code to be much better than it is
+	- move game logic to its own class
