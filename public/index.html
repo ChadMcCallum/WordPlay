@@ -26,7 +26,7 @@
 		<script type='text/javascript' src='./jquery.qrcode.min.js'></script>
 		<script type='text/javascript' src='http://underscorejs.org/underscore-min.js'></script>
 		<script type='text/javascript'>
-		  var socket = io.connect('http://localhost:8000');
+		  var socket = io.connect();
 		  socket.emit('start-game');
 		  socket.on('game-state', function(data) {
 			if(data.hasTimeout && window.startTime == null) {

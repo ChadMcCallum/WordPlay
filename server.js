@@ -1,5 +1,6 @@
 var io = require('socket.io');
 var express = require('express');
+var server = require('http');
 var _ = require('underscore');
 var fs = require("fs");
 
@@ -35,7 +36,6 @@ var scores = {
 }
 
 var app = express.createServer();
-var io = io.listen(app);
 
 app.configure(function() {
 	app.use('/static', express.static(__dirname + "/media"));
@@ -44,6 +44,8 @@ app.configure(function() {
 
 var port = process.env.PORT || 5000;
 app.listen(port);
+
+var io = io.listen(app);
 
 var games = {};
 
