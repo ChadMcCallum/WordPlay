@@ -45,6 +45,11 @@ app.configure(function() {
 var port = process.env.PORT || 5000;
 app.listen(port);
 
+io.configure(function() {
+	io.set("transports", ["xhr-polling"]);
+	io.set("polling duration", 10);
+});
+
 var io = io.listen(app);
 
 var games = {};
