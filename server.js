@@ -185,7 +185,7 @@ function lettersAreFair(letters) {
 		var letter = letterArray[i];
 		var duplicates = _.filter(letterArray, function(let) { return let == letter; });
 		var isHardLetter = (_.indexOf(hardLetters, letter) >= 0);
-		if(duplicates.length > 3 || (isHardLetter && duplicates.length > 1)) return false;
+		if(duplicates.length > 2 || (isHardLetter && duplicates.length > 1)) return false;
 	}
 	return true;
 }
