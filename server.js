@@ -64,7 +64,7 @@ io.sockets.on('connection', function(socket) {
 		} while (!lettersAreFair(letters))
 		var gamestate = {
 			letters: letters,
-			id: 123456,
+			id: Math.floor(Math.random() * 100000),
 			teams: [
 				{ name: 'Red', players: [] },
 				{ name: 'Blue', players: [] }
