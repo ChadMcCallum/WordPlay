@@ -27,6 +27,9 @@ Implemented ideas:
 Ideas:
 - refactor the code to be much better than it is
 	- move game logic to its own class
+- client & main screen disconnect logic
+	- on client disconnect, remove from main screen
+	- on main screen disconnect, inform all clients
 - end game logic and restart next round
 - notifications on successful words
 	- show most recent scoring word
