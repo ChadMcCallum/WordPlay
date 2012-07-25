@@ -123,14 +123,16 @@ io.sockets.on('connection', function(socket) {
 	socket.on('disconnect', function() {
 		console.log('disconnected');
 		socket.get('gameSocket', function(error, gameSocket) {
-			gameSocket.get('game', function(error, gamestate) {
-				socket.get('player', function(error, player) {
-					_.each(gamestate.teams, function(team) {
-						team.players = _.without(team.players, player);
+			if(gameSocket != null) {
+				gameSocket.get('game', function(error, gamestate) {
+					socket.get('player', function(error, player) {
+						_.each(gamestate.teams, function(team) {
+							team.players = _.without(team.players, player);
+						});
+						gameSocket.emit('game-state', gamestate);
 					});
-					gameSocket.emit('game-state', gamestate);
 				});
-			});
+			}
 		});
 	});
 });
