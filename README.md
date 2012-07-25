@@ -3,6 +3,8 @@ WordPlay
 
 A game using a main screen, client mobile devices, node.js and socket.io
 
+** it works!  Try it at http://wordplay-node.heroku.com/
+
 Basic idea:
 
 - Node.js server using express and socket.io
@@ -20,21 +22,26 @@ Implemented ideas:
 	- ensure each Q has a matching U
 	- prevent lots of hard letters
 	- prevent lots of duplicate letters
+- host in heroku
 
 Ideas:
+- refactor the code to be much better than it is
+	- move game logic to its own class
+- end game logic and restart next round
+- notifications on successful words
+	- show most recent scoring word
+	- on both main screen and client
 - streak/bonus points
 - make it look pretty
 - leaderboard
-- remember client devices to maintain player profile, avoid having to enter name every time
+- ask client for name when they connect
+	- remember client devices to maintain player profile, avoid having to enter name every time
 - multiple displays per game (right now each display starts a new gamestate)
 - replace letters in place instead of appending to end
-- show most recent scoring word
 - cool stats
 	- word count per player
 	- # of failures per player (and type, i.e. not english, no letter, etc.)
 	- speed of players
 	- reused words
 - show stats on client device as well as main screen
-- refactor the code to be much better than it is
-	- move game logic to its own class
-- host in heroku
+
