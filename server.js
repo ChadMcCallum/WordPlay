@@ -102,20 +102,22 @@ io.sockets.on('connection', function(socket) {
 	socket.on('guess', function(data) {
 		var guess = data.guess.toLowerCase();
 		socket.get('gameSocket', function(error, gameSocket) {
-			gameSocket.get('game', function(error, gamestate) {
-				if(lineIsValid(guess, gamestate.letters) && validWord(guess)) {
-					var score = getScoreForLetters(guess);
-					socket.get('player', function(error, player) {
-						player.score += score;
-						gamestate.letters = updateLetters(guess, gamestate.letters);
-						console.log(gamestate.letters);
-						gameSocket.emit('game-state', gamestate);
-						socket.emit('legit');
-					});
-				} else {
-					socket.emit('fail');
-				}
-			});
+			if(gameSocket != null) {
+				gameSocket.get('game', function(error, gamestate) {
+					if(lineIsValid(guess, gamestate.letters) && validWord(guess)) {
+						var score = getScoreForLetters(guess);
+						socket.get('player', function(error, player) {
+							player.score += score;
+							gamestate.letters = updateLetters(guess, gamestate.letters);
+							console.log(gamestate.letters);
+							gameSocket.emit('game-state', gamestate);
+							socket.emit('legit');
+						});
+					} else {
+						socket.emit('fail');
+					}
+				});
+			}
 		});
 	});
 	socket.on('disconnect', function() {
