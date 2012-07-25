@@ -38,7 +38,7 @@
 				}, 1000);
 			}
 			console.log(data);
-			$('#qrcode').empty().qrcode('http://localhost:8000/client.html?id=' + data.id);
+			$('#qrcode').empty().qrcode(window.location.href + '/client.html?id=' + data.id);
 			$('#letters').text(data.letters.toUpperCase().split('').join(' '));
 			$.each(data.teams, function(i, team) {
 				var teamDiv = $('#' + team.name);
