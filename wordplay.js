@@ -1,10 +1,6 @@
 var fs = require("fs");
 
-var WordPlay = function(opts) {
-
-}
-
-WordPlay.prototype = {
+var WordPlay = {
 	scores: {
 		'a': 1,
 		'b': 3,

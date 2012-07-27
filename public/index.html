@@ -14,6 +14,7 @@
 		</style>
 	</head>
 	<body>
+		<span id='id'></span>
 		<div id='letters'>
 		
 		</div>
@@ -38,6 +39,7 @@
 				}, 1000);
 			}
 			console.log(data);
+			$('#id').html(data.id);
 			$('#qrcode').empty().qrcode(window.location.href + '/client.html?id=' + data.id);
 			$('#letters').text(data.letters.toUpperCase().split('').join(' '));
 			$.each(data.teams, function(i, team) {
@@ -48,7 +50,8 @@
 				}
 				var teamScore = _.reduce(team.players, function(memo, player) { return memo + player.score; }, 0)
 				$('.team-score', teamDiv).text(teamScore);
-				var playersDiv = (".players", teamDiv);
+				var playersDiv = $(".players", teamDiv);
+				playersDiv.empty();
 				$.each(team.players, function(j, player) {
 					var playerDiv = $('#' + player.name, playersDiv);
 					if(playerDiv.length == 0) {

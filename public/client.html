@@ -1,37 +1,66 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<div id='loading'>
+		<div id='player-name'>
+			Your Name: <input type='text' id='name' /> <button id='connect' />
+		</div>
+		<div id='loading' style='display: none;'>
 		Joining game...
 		</div>
 		<div id='guess' style='display: none;'>
 			You are on team <span id='team-name'></span>
+			<div id='letters'>
+				
+			</div>
 			<input type='text' id='guessbox' />
 			<button id='submit'>guess!</button>
 		</div>
 		<script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script type='text/javascript' src="/socket.io/socket.io.js"></script>
+		<script type='text/javascript' src='./jquery.cookie.js'></script>
 		<script type='text/javascript'>
-		var socket = io.connect();
-		socket.emit('join-game', { id: getParam('id'), player: { name: 'RTigger', score: 0 } });
-		socket.on('joined', function(data) {
-			$('#loading').hide();
-			$('#guess').show();
-			$('#team-name').text(data.team.name);
+		window.onbeforeunload = function() {
+			window.socket.disconnect();
+		}
+		$().ready(function() {
+			var name = $.cookie('player-name');
+			if(name) {
+				$('#name').val(name);
+				$('#player-name').hide();
+				connectToServer();
+			}
+		});
+		$('#connect').bind('click', function() {
+			if($('#name').val() != '') {
+				$.cookie('player-name', $('#name').val(), { expires: 30 });
+				$('#player-name').hide();
+				connectToServer();
+			}
 		});
 		
-		socket.on('legit', function() {
-			$('#guessbox').val('');
-		});
+		function connectToServer() {
+			window.socket = io.connect();
+			socket.emit('join-game', { id: getParam('id'), player: { name: $('#name').val() } });
+			socket.on('joined', function(data) {
+				$('#loading').hide();
+				$('#guess').show();
+				$('#team-name').text(data.team.name);
+			});
+			
+			socket.on('legit', function() {
+				$('#guessbox').val('');
+			});
+			
+			socket.on('fail', function() {
+				$('#guessbox').val('');
+			});
+			
+			$('#submit').bind('click', function() {
+				var guess = $('#guessbox').val();
+				socket.emit('guess', { guess: guess });
+			});
+		}
 		
-		socket.on('fail', function() {
-			$('#guessbox').val('');
-		});
-		
-		$('#submit').bind('click', function() {
-			var guess = $('#guessbox').val();
-			socket.emit('guess', { guess: guess });
-		});
 
 		function getParam(name) {
 			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");

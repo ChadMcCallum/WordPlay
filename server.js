@@ -80,6 +80,7 @@ io.sockets.on('connection', function(socket) {
 		var gameSocket = games[data.id];
 		if(gameSocket) {
 			socket.set('gameSocket', gameSocket);
+			data.player.score = 0;
 			socket.set('player', data.player);
 			gameSocket.get('game', function(error, gamestate) {
 				var team = _.min(gamestate.teams, function(team) {

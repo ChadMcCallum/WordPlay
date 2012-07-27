@@ -23,22 +23,26 @@ Implemented ideas:
 	- prevent lots of hard letters
 	- prevent lots of duplicate letters
 - host in heroku
+- ask client for name when they connect
+	- remember client devices to maintain player profile, avoid having to enter name every time
+- client & main screen disconnect logic
+	- on client disconnect, remove from main screen
 
 Ideas:
 - refactor the code to be much better than it is
 	- move game logic to its own class
+- add letters to client screen, let them use them instead of the keyboard (thanks matt!)
+    - not sure if possible, cause we'd be removing letters and have to reset input box every time letters are used by anyone
 - client & main screen disconnect logic
-	- on client disconnect, remove from main screen
 	- on main screen disconnect, inform all clients
 - end game logic and restart next round
 - notifications on successful words
 	- show most recent scoring word
 	- on both main screen and client
 - streak/bonus points
+	- points for using letters that have been there for awhile
 - make it look pretty
 - leaderboard
-- ask client for name when they connect
-	- remember client devices to maintain player profile, avoid having to enter name every time
 - multiple displays per game (right now each display starts a new gamestate)
 - replace letters in place instead of appending to end
 - cool stats
