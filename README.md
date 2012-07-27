@@ -27,6 +27,8 @@ Implemented ideas:
 	- remember client devices to maintain player profile, avoid having to enter name every time
 - client & main screen disconnect logic
 	- on client disconnect, remove from main screen
+- change submission logic to a "time-slice" system
+	- clients can submit whatever they want, but the server evaluates all guesses after X seconds - the highest scoring submission gets the points for that timeslice. this prevents lots of players making the game more or less unplayable because of stolen letters
 
 Ideas:
 - refactor the code to be much better than it is
@@ -35,6 +37,11 @@ Ideas:
     - not sure if possible, cause we'd be removing letters and have to reset input box every time letters are used by anyone
 - client & main screen disconnect logic
 	- on main screen disconnect, inform all clients
+- more information on client
+	- "how to play" text
+	- letters available (so you don't have to switch back and forth between screen and device)
+	- player state (score, last word scored, etc)
+	- word state (if you did score, or if you failed, why - someone stole letters, not english, no letters in game)
 - end game logic and restart next round
 - notifications on successful words
 	- show most recent scoring word

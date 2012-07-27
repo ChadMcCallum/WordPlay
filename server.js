@@ -33,7 +33,7 @@ var scores = {
 	'x': 8,
 	'y': 4,
 	'z': 10
-}
+};
 
 var app = express.createServer();
 
@@ -60,8 +60,8 @@ io.sockets.on('connection', function(socket) {
 		var letters = "";
 		do
 		{
-			letters = createRandomLetterArray(16)
-		} while (!lettersAreFair(letters))
+			letters = createRandomLetterArray(16);
+		} while (!lettersAreFair(letters));
 		var gamestate = {
 			letters: letters,
 			id: Math.floor(Math.random() * 100000),
@@ -69,12 +69,14 @@ io.sockets.on('connection', function(socket) {
 				{ name: 'Red', players: [] },
 				{ name: 'Blue', players: [] }
 			],
-			hasTimeout : false
+			hasTimeout : false,
+			currentGuesses: []
 		};
 		games[gamestate.id] = socket;
 		socket.set('game', gamestate, function() {
 			socket.emit('game-state', gamestate);
 		});	
+		setInterval(function() { updateScoreSlice(socket); }, 5000);
 	});
 	socket.on('join-game', function(data) {
 		var gameSocket = games[data.id];
@@ -108,10 +110,7 @@ io.sockets.on('connection', function(socket) {
 					if(lineIsValid(guess, gamestate.letters) && validWord(guess)) {
 						var score = getScoreForLetters(guess);
 						socket.get('player', function(error, player) {
-							player.score += score;
-							gamestate.letters = updateLetters(guess, gamestate.letters);
-							console.log(gamestate.letters);
-							gameSocket.emit('game-state', gamestate);
+							gamestate.currentGuesses.push({ player: player, score: score, guess: guess });
 							socket.emit('legit');
 						});
 					} else {
@@ -137,6 +136,21 @@ io.sockets.on('connection', function(socket) {
 		});
 	});
 });
+
+function updateScoreSlice(socket) {
+	socket.get('game', function(error, gamestate) {
+		var best = _.max(gamestate.currentGuesses, function(guess) {
+			return guess.score;
+		});
+		if(best != null) {
+			best.player.score += best.score;
+			gamestate.letters = updateLetters(best.guess, gamestate.letters);
+			console.log(gamestate.letters);
+			socket.emit('game-state', gamestate);
+			gamestate.currentGuesses = [];
+		}
+	});
+}
 
 function getScoreForLetters(guess) {
 	var total = 0;
