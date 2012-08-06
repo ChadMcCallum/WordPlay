@@ -25,17 +25,23 @@ Implemented ideas:
 - host in heroku
 - ask client for name when they connect
 	- remember client devices to maintain player profile, avoid having to enter name every time
-- client & main screen disconnect logic
+- client disconnect logic
 	- on client disconnect, remove from main screen
 - change submission logic to a "time-slice" system
 	- clients can submit whatever they want, but the server evaluates all guesses after X seconds - the highest scoring submission gets the points for that timeslice. this prevents lots of players making the game more or less unplayable because of stolen letters
+- moved code to several files:
+	- server2.js - kicks off the express and socket.io servers, binds wordplay-router
+	- wordplay-router.js - logic for initial connections
+	- wordplay-game.js - all the server-side game logic, handles game and client events
+	- wordplay-client.js - server-side client logic, handles guess submissions
+	- wordplay-mirror.js - client for game hosts, doesn't do anything (yet)
+- replace letters in place instead of appending to end
 
 Ideas:
-- refactor the code to be much better than it is
-	- move game logic to its own class
-- add letters to client screen, let them use them instead of the keyboard (thanks matt!)
-    - not sure if possible, cause we'd be removing letters and have to reset input box every time letters are used by anyone
-- client & main screen disconnect logic
+- refactor client code and html
+- add letters to client screen, let player use letters instead of the keyboard (thanks matt!)
+	- would need to reset input & letters on gamestate update
+- main screen disconnect logic
 	- on main screen disconnect, inform all clients
 - more information on client
 	- "how to play" text
@@ -43,19 +49,21 @@ Ideas:
 	- player state (score, last word scored, etc)
 	- word state (if you did score, or if you failed, why - someone stole letters, not english, no letters in game)
 - end game logic and restart next round
+- ADS! Show 30 second video on main display while waiting for next round, banner image on client devices
 - notifications on successful words
 	- show most recent scoring word
 	- on both main screen and client
 - streak/bonus points
 	- points for using letters that have been there for awhile
+- show game slice counter
 - make it look pretty
 - leaderboard
 - multiple displays per game (right now each display starts a new gamestate)
-- replace letters in place instead of appending to end
 - cool stats
 	- word count per player
 	- # of failures per player (and type, i.e. not english, no letter, etc.)
 	- speed of players
 	- reused words
+	- highest scoring word
 - show stats on client device as well as main screen
 

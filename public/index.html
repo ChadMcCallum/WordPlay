@@ -28,7 +28,7 @@
 		<script type='text/javascript' src='http://underscorejs.org/underscore-min.js'></script>
 		<script type='text/javascript'>
 		  var socket = io.connect();
-		  socket.emit('start-game');
+		  socket.emit('host');
 		  socket.on('game-state', function(data) {
 			if(data.hasTimeout && window.startTime == null) {
 				window.startTime = new Date().getTime();

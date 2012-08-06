@@ -40,14 +40,14 @@
 		
 		function connectToServer() {
 			window.socket = io.connect();
-			socket.emit('join-game', { id: getParam('id'), player: { name: $('#name').val() } });
+			socket.emit('join', { id: getParam('id'), name: $('#name').val() });
 			socket.on('joined', function(data) {
 				$('#loading').hide();
 				$('#guess').show();
 				$('#team-name').text(data.team.name);
 			});
 			
-			socket.on('legit', function() {
+			socket.on('pass', function() {
 				$('#guessbox').val('');
 			});
 			
