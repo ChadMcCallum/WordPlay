@@ -36,11 +36,11 @@ Implemented ideas:
 	- wordplay-client.js - server-side client logic, handles guess submissions
 	- wordplay-mirror.js - client for game hosts, doesn't do anything (yet)
 - replace letters in place instead of appending to end
+- add letters to client screen, let player use letters instead of the keyboard (thanks @beardedinventor !)
+- made client look pretty (thanks @nvlesparker !)
 
 Ideas:
 - refactor client code and html
-- add letters to client screen, let player use letters instead of the keyboard (thanks matt!)
-	- would need to reset input & letters on gamestate update
 - main screen disconnect logic
 	- on main screen disconnect, inform all clients
 - more information on client
@@ -56,7 +56,7 @@ Ideas:
 - streak/bonus points
 	- points for using letters that have been there for awhile
 - show game slice counter
-- make it look pretty
+- make main screen look pretty
 - leaderboard
 - multiple displays per game (right now each display starts a new gamestate)
 - cool stats
