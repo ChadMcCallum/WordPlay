@@ -17,9 +17,9 @@
 	margin: .2em;
 	display: inline-block;
 }
-.letter-button-cap {
-	display: block;
-}
+
+[data-role=page]{height: 100% !important; position:relative !important;}
+[data-role=footer]{bottom:0; position:absolute !important; top: auto !important; width:100%;} 
 
 .ui-bar-a {
 	border: 1px solid #1A6E6B /*{a-bar-border}*/;

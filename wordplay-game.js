@@ -70,8 +70,9 @@ WordplayHost.prototype.updateClientGamestate = function() {
 		letters: this.letters,
 		teams: teams
 	};
-	this.hostSocket.emit('game-state', gamestate);
-	_.each(this.mirrors, function(mirror) { mirror.tell('game-state', gamestate); });
+	this.tellEveryone('game-state', gamestate);
+	//this.hostSocket.emit('game-state', gamestate);
+	//_.each(this.mirrors, function(mirror) { mirror.tell('game-state', gamestate); });
 }
 
 WordplayHost.prototype.getStrippedTeam = function(team) {
@@ -161,7 +162,7 @@ WordplayHost.prototype.guess = function(guess, player) {
 };
 
 WordplayHost.prototype.lettersAreValid = function(guess) {
-	var inputLetters = guess.split("");
+	var inputLetters = guess.toLowerCase().split("");
 	for (var i = 0; i < inputLetters.length; i++) {
 		if (this.letters.indexOf(inputLetters[i]) < 0) {
 			return false;

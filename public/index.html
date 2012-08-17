@@ -40,7 +40,7 @@
 			}
 			console.log(data);
 			$('#id').html(data.id);
-			$('#qrcode').empty().qrcode(window.location.href + '/client.html?id=' + data.id);
+			$('#qrcode').empty().qrcode(window.location.href + '/client2.html?id=' + data.id);
 			$('#letters').text(data.letters.toUpperCase().split('').join(' '));
 			$.each(data.teams, function(i, team) {
 				var teamDiv = $('#' + team.name);

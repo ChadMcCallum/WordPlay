@@ -14,13 +14,17 @@ function WordplayRouter(sockets) {
 		});
 		socket.on('join', function(data) {
 			var host = _.find(self.hosts, function(host) { return host.id == data.id; });
-			var client = new WordplayClient(socket, host, data);
-			host.addClient(client);
+			if(host != null) {
+				var client = new WordplayClient(socket, host, data);
+				host.addClient(client);
+			}
 		});
 		socket.on('mirror', function(data) {
 			var mirror = new WordplayMirror(socket);
 			var host = _.find(self.hosts, function(host) { return host.id == data.id; });
-			host.addMirror(mirror);
+			if(host != null) {
+				host.addMirror(mirror);
+			}
 		});
 	});
 	this.hosts = [];
