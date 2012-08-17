@@ -44,10 +44,17 @@ function connectToServer() {
 	});
 	socket.on('game-state', function(data) {
 		var letters = data.letters.split('');
+		var hasChanged = false;
 		for(var i = 0; i < letters.length; i++) {
 			var letter = letters[i];
 			var button = $('#letter-buttons span.ui-btn-text:nth(' + i + ')');
-			button.html(letter.toUpperCase());
+			if(button.html() != letter.toUpperCase()) {
+				button.html(letter.toUpperCase());	
+				hasChanged = true;
+			}			
+		}
+		if(hasChanged) {
+			$('#guess').val('');
 		}
 	});
 	
