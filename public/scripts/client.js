@@ -11,7 +11,7 @@ window.onbeforeunload = function() {
 	window.socket.disconnect();
 }
 
-$('#join').bind('click', function() {
+$('#join').live('click', function() {
 	if($('#name').val() != '') {
 		$.cookie('player-name', $('#name').val(), { expires: 30 });
 		$.mobile.changePage($('#play'));
