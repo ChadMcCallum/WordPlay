@@ -5,6 +5,7 @@ function WordplayClient(socket, host, data) {
 	this.socket = socket;
 	this.name = data.name;
 	this.score = 0;
+	this.id = Math.floor(Math.random() * 100000);
 	//register own functions for events
 	for(var prop in this) {
 		if(_.isFunction(this[prop])) {

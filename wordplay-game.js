@@ -79,7 +79,7 @@ WordplayHost.prototype.getStrippedTeam = function(team) {
 	return { 
 		name: team.name,
 		players: _.map(team.players, function(player) {
-			return { name: player.name, score: player.score };
+			return { name: player.name, score: player.score, id: player.id };
 		})
 	};
 };
@@ -131,7 +131,7 @@ WordplayHost.prototype.addClient = function(client) {
 		this.startTimer();
 	}
 	this.updateClientGamestate();
-	client.tell('joined', { team: this.getStrippedTeam(team) });
+	client.tell('joined', { id: client.id, team: this.getStrippedTeam(team) });
 };
 
 WordplayHost.prototype.startTimer = function() {

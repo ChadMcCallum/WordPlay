@@ -38,7 +38,7 @@ var clickButton = function(e, ui) {
 	$('#guess').val(newGuess);
 };
 
-
+window.playerID = 0;
 	
 function connectToServer() {
 	//init buttons
@@ -51,7 +51,7 @@ function connectToServer() {
 	window.socket = io.connect();
 	socket.emit('join', { id: getParam('id'), name: $('#name').val() });
 	socket.on('joined', function(data) {
-		//do stuff
+		playerID = data.id;
 	});
 	socket.on('game-state', function(data) {
 		var letters = data.letters.split('');
@@ -67,6 +67,18 @@ function connectToServer() {
 		if(hasChanged) {
 			$('#guess').val('');
 			enableAllLetters();
+		}
+		//update scores
+		if(playerID != 0) {
+			var team = _.find(data.teams, function(team) { 
+				return _.any(team.players, function(player) {
+					return player.id == playerID;
+				});
+			});
+			var self = _.find(team.players, function(player) { return player.id == playerID });
+			$('#your-score').html(self.score);
+			var teamScore = _.reduce(team.players, function(memo, player) { return memo + player.score; }, 0);
+			$('#team-score').html(teamScore);
 		}
 	});
 	
