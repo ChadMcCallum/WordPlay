@@ -5,36 +5,42 @@ $().ready(function() {
 		$.mobile.changePage($('#play'));
 		connectToServer();
 	}
+	
+	$('#join').bind('click', function() {
+		if($('#name').val() != '') {
+			$.cookie('player-name', $('#name').val(), { expires: 30 });
+			$.mobile.changePage($('#play'));
+			connectToServer();
+		}
+	});
+
+	$('#submit').bind('click', function() {
+		var guess = $('#guess').val();
+		socket.emit('guess', { guess: guess.toLowerCase() });
+	});
 });
 
 window.onbeforeunload = function() {
 	window.socket.disconnect();
 }
 
-$('#join').live('click', function() {
-	if($('#name').val() != '') {
-		$.cookie('player-name', $('#name').val(), { expires: 30 });
-		$.mobile.changePage($('#play'));
-		connectToServer();
-	}
-});
 
-$('.letter-button').live('click', function(e, ui) {
+
+var clickButton = function(e, ui) {
 	var letter = $('.ui-btn-text', e.currentTarget).html();
 	$(e.currentTarget).addClass('ui-disabled');
 	var newGuess = $('#guess').val() + letter;
 	$('#guess').val(newGuess);
-});
+};
 
-$('#submit').live('click', function() {
-	var guess = $('#guess').val();
-	socket.emit('guess', { guess: guess.toLowerCase() });
-});
+
 	
 function connectToServer() {
 	//init buttons
 	for(var i = 0; i < 16; i++) {
-		$('#letter-buttons').append("<div class='letter-button'><button>&nbsp;</button></div>");
+		var button = $("<div class='letter-button'><button>&nbsp;</button></div>");
+		$('#letter-buttons').append(button);
+		button.bind('click', clickButton);
 	}
 	$('#letter-buttons').trigger('create');
 	window.socket = io.connect();
