@@ -18,6 +18,11 @@ $().ready(function() {
 		var guess = $('#guess').val();
 		socket.emit('guess', { guess: guess.toLowerCase() });
 	});
+	
+	$('#reset').bind('click', function() {
+		enableAllLetters();
+		$('#guess').val('');
+	});
 });
 
 window.onbeforeunload = function() {
@@ -61,6 +66,7 @@ function connectToServer() {
 		}
 		if(hasChanged) {
 			$('#guess').val('');
+			enableAllLetters();
 		}
 	});
 	
