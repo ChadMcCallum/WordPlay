@@ -2,6 +2,7 @@ var fs = require('fs');
 var _ = require('underscore');
 
 var GAME_LENGTH = 120; //in seconds
+var REST_LENGTH = 30; //in seconds
 var SCORE_SLICE_LENGTH = 5; //in seconds
 var LETTERS_LENGTH = 16;
 
@@ -13,6 +14,15 @@ function WordplayHost(socket) {
 	this.updateClientGamestate();
 	console.log('host listening for messages');	
 };
+
+WordplayHost.prototype.startNewGame = function() {
+	this.letters = this.initLetterArray(LETTERS_LENGTH);
+	_.each(this.teams, function(team) { team.score = 0; });
+	_.each(this.clients, function(client) { client.score = 0; });
+	this.lastStatus = "";
+	this.startTimer();
+	this.updateClientGamestate();
+}
 
 WordplayHost.prototype.initGamestate = function() {
 	this.dictionary = fs.readFileSync("./eng_com.dic", 'utf8').split("\n");
@@ -68,7 +78,8 @@ WordplayHost.prototype.updateClientGamestate = function() {
 		hasTimeout: this.hasTimeout,
 		id: this.id,
 		letters: this.letters,
-		teams: teams
+		teams: teams,
+		status: this.lastStatus
 	};
 	this.tellEveryone('game-state', gamestate);
 	//this.hostSocket.emit('game-state', gamestate);
@@ -144,7 +155,12 @@ WordplayHost.prototype.startTimer = function() {
 };
 
 WordplayHost.prototype.endGame = function() {
+	var self = this;
 	this.tellEveryone('game-over');
+	clearInterval(this.sliceInterval);
+	this.timer = setTimeout(function() {
+		self.startNewGame();
+	}, 1000 * REST_LENGTH);
 };
 
 WordplayHost.prototype.guess = function(guess, player) {
@@ -221,6 +237,7 @@ WordplayHost.prototype.updateScoreSlice = function() {
 		best.player.score += best.score;
 		this.removeAndUpdateLetters(best.guess);
 		this.currentGuesses = [];
+		this.lastStatus = best.player.name + " scored " + best.score + " with the word '" + best.guess + "'";
 	}
 	this.updateClientGamestate();
 };

@@ -16,12 +16,21 @@ $().ready(function() {
 
 	$('#submit').bind('click', function() {
 		var guess = $('#guess').val();
+		$('#status').html('&nbsp;');
 		socket.emit('guess', { guess: guess.toLowerCase() });
 	});
 	
 	$('#reset').bind('click', function() {
 		enableAllLetters();
 		$('#guess').val('');
+	});
+	
+	$('#back').bind('click', function() {
+		$.mobile.changePage($('#main'));
+	});
+	
+	$('#howto').bind('click', function() {
+		$.mobile.changePage($('#howtoplay'));
 	});
 });
 
@@ -54,6 +63,9 @@ function connectToServer() {
 		playerID = data.id;
 	});
 	socket.on('game-state', function(data) {
+		if($.mobile.activePage != 'play') {
+			$.mobile.changePage($('#play'));
+		}
 		var letters = data.letters.split('');
 		var hasChanged = false;
 		for(var i = 0; i < letters.length; i++) {
@@ -80,6 +92,7 @@ function connectToServer() {
 			var teamScore = _.reduce(team.players, function(memo, player) { return memo + player.score; }, 0);
 			$('#team-score').html(teamScore);
 		}
+		$('#status').html(data.status);
 	});
 	
 	socket.on('pass', function() {
@@ -87,9 +100,14 @@ function connectToServer() {
 		enableAllLetters();
 	});
 	
-	socket.on('fail', function() {
+	socket.on('fail', function(data) {
 		$('#guess').val('');
+		$('#status').html(data.message);
 		enableAllLetters();
+	});
+	
+	socket.on('game-over', function() {
+		$.mobile.changePage($('#gameover'));
 	});
 }
 

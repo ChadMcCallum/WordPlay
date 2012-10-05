@@ -15,7 +15,7 @@
 </head> 
 
 <body> 
-	<div data-role="page" data-theme="a">
+	<div data-role="page" data-theme="a" id='main'>
 		<div data-role="header">
 			<h1 style='font-size: 24pt; margin: .3em; text-overflow: clip;'>WORDPLAY</h1>
 		</div>
@@ -23,7 +23,7 @@
 			<p>Please enter your name to join the game</p>
 			<p><input type='text' id='name' /></p>
 			<p><button id='join'>Join game</button></p>
-			<p><button>How to play</button></p>
+			<p><button id='howto'>How to play</button></p>
 		</div>
 		<div data-role="footer"></div>
 	</div>
@@ -31,17 +31,39 @@
 		<div data-role="header">
 			<h1 style='font-size: 24pt; margin: .3em; text-overflow: clip;'>WORDPLAY</h1>
 			<div>
-				<input type='text' id='guess' style='width: 300px; margin: 5px auto; display: block;' readonly='readonly' />
-				
+				<input type='text' id='guess' style='width: 300px; margin: 5px auto; display: block;' readonly='readonly' />				
 			</div>
+			<div style='text-align: center;' id='status'>&nbsp;</div>
 		</div>
-		<div data-role="content" style='padding: 10px;'>
+		<div data-role="content" style='padding-left: 20px; padding-top: 0px;'>
 			<div id='letter-buttons'></div>
 			<button id='submit' width='75%' data-inline="true">Submit Guess</button><button id='reset' style='display: inline-block;' data-inline="true">Reset</button>
 		</div>
 		<div data-role="footer" style='text-align: center;'>
 			Your Score: <span id='your-score'>0</span><br />
 			Team Score: <span id='team-score'>0</span>
+		</div>
+	</div>
+	<div data-role="page" data-theme="a" id='gameover'>
+		<div data-role="header">
+			<h1 style='font-size: 24pt; margin: .3em; text-overflow: clip;'>WORDPLAY</h1>
+		</div>
+		<div data-role="content">
+			Game over man!  A new game will start in 30 seconds
+		</div>
+	</div>
+	<div data-role="page" data-theme="a" id="howtoplay">
+		<div data-role="header">
+			<h1 style='font-size: 24pt; margin: .3em; text-overflow: clip;'>WORDPLAY</h1>
+		</div>
+		<div data-role="content">
+			<ul>
+				<li>Use the letters from the game to spell words</li>
+				<li>If your word is the highest scoring word in the last 5 seconds, you and your team will score points</li>
+				<li>After every word score, the used letters will be replaced with new letters</li>
+				<li>Try to get the highest score in 2 minutes!</li>
+			</ul>
+			<p><button id='back'>Back to game</button></p>
 		</div>
 	</div>
 </body>
