@@ -54,7 +54,7 @@ function connectToServer() {
 	for(var i = 0; i < 16; i++) {
 		var button = $("<div class='letter-button'><button>&nbsp;</button></div>");
 		$('#letter-buttons').append(button);
-		button.bind('tap', clickButton);
+		button.bind('touchstart', clickButton);
 	}
 	$('#letter-buttons').trigger('create');
 	window.socket = io.connect();
