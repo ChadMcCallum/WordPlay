@@ -63,7 +63,7 @@ function connectToServer() {
 		playerID = data.id;
 	});
 	socket.on('game-state', function(data) {
-		if($.mobile.activePage != 'play') {
+		if($.mobile.activePage.attr('id') != 'play') {
 			$.mobile.changePage($('#play'));
 		}
 		var letters = data.letters.split('');

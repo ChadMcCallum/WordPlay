@@ -38,20 +38,21 @@ Implemented ideas:
 - replace letters in place instead of appending to end
 - add letters to client screen, let player use letters instead of the keyboard (thanks @beardedinventor !)
 - made client look pretty (thanks @nvlesparker !)
-
-Ideas:
-- refactor client code and html
-- main screen disconnect logic
-	- on main screen disconnect, inform all clients
 - more information on client
 	- "how to play" text
 	- letters available (so you don't have to switch back and forth between screen and device)
 	- player state (score, last word scored, etc)
 	- word state (if you did score, or if you failed, why - someone stole letters, not english, no letters in game)
 - end game logic and restart next round
-- ADS! Show 30 second video on main display while waiting for next round, banner image on client devices
 - notifications on successful words
 	- show most recent scoring word
+
+Ideas:
+- refactor client code and html
+- main screen disconnect logic
+	- on main screen disconnect, inform all clients
+- ADS! Show 30 second video on main display while waiting for next round, banner image on client devices
+- notifications on successful words
 	- on both main screen and client
 - streak/bonus points
 	- points for using letters that have been there for awhile
@@ -66,4 +67,3 @@ Ideas:
 	- reused words
 	- highest scoring word
 - show stats on client device as well as main screen
-
